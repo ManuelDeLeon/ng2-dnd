@@ -14,21 +14,25 @@ export * from './dnd.service';
 export * from './draggable.component';
 export * from './droppable.component';
 export * from './sortable.component';
-export let providers = [
+export var providers = [
     DragDropConfig,
     { provide: DragDropService, useFactory: dragDropServiceFactory },
     { provide: DragDropSortableService, useFactory: dragDropSortableServiceFactory, deps: [DragDropConfig] }
 ];
-export class DndModule {
-    static forRoot() {
+var DndModule = /** @class */ (function () {
+    function DndModule() {
+    }
+    DndModule.forRoot = function () {
         return {
             ngModule: DndModule,
             providers: providers
         };
-    }
-}
-DndModule.ɵmod = i0.ɵɵdefineNgModule({ type: DndModule });
-DndModule.ɵinj = i0.ɵɵdefineInjector({ factory: function DndModule_Factory(t) { return new (t || DndModule)(); } });
+    };
+    DndModule.ɵmod = i0.ɵɵdefineNgModule({ type: DndModule });
+    DndModule.ɵinj = i0.ɵɵdefineInjector({ factory: function DndModule_Factory(t) { return new (t || DndModule)(); } });
+    return DndModule;
+}());
+export { DndModule };
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && i0.ɵɵsetNgModuleScope(DndModule, { declarations: [DraggableComponent, DraggableHandleComponent, DroppableComponent, SortableContainer, SortableComponent, SortableHandleComponent], exports: [DraggableComponent, DraggableHandleComponent, DroppableComponent, SortableContainer, SortableComponent, SortableHandleComponent] }); })();
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(DndModule, [{
         type: NgModule,

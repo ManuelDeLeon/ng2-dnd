@@ -1,40 +1,55 @@
+import { __extends } from "tslib";
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { AbstractComponent, AbstractHandleComponent } from './abstract.component';
 import * as i0 from "@angular/core";
 import * as i1 from "./dnd.service";
 import * as i2 from "./dnd.config";
-export class SortableContainer extends AbstractComponent {
-    constructor(elemRef, dragDropService, config, cdr, _sortableDataService) {
-        super(elemRef, dragDropService, config, cdr);
-        this._sortableDataService = _sortableDataService;
-        this._sortableData = [];
-        this.dragEnabled = false;
+var SortableContainer = /** @class */ (function (_super) {
+    __extends(SortableContainer, _super);
+    function SortableContainer(elemRef, dragDropService, config, cdr, _sortableDataService) {
+        var _this = _super.call(this, elemRef, dragDropService, config, cdr) || this;
+        _this._sortableDataService = _sortableDataService;
+        _this._sortableData = [];
+        _this.dragEnabled = false;
+        return _this;
     }
-    set draggable(value) {
-        this.dragEnabled = !!value;
-    }
-    set sortableData(sortableData) {
-        this._sortableData = sortableData;
-        if (sortableData instanceof FormArray) {
-            this.sortableHandler = new SortableFormArrayHandler();
-        }
-        else {
-            this.sortableHandler = new SortableArrayHandler();
-        }
-        //
-        this.dropEnabled = !!this._sortableData;
-        // console.log("collection is changed, drop enabled: " + this.dropEnabled);
-    }
-    get sortableData() {
-        return this._sortableData;
-    }
-    set dropzones(value) {
-        this.dropZones = value;
-    }
-    _onDragEnterCallback(event) {
+    Object.defineProperty(SortableContainer.prototype, "draggable", {
+        set: function (value) {
+            this.dragEnabled = !!value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SortableContainer.prototype, "sortableData", {
+        get: function () {
+            return this._sortableData;
+        },
+        set: function (sortableData) {
+            this._sortableData = sortableData;
+            if (sortableData instanceof FormArray) {
+                this.sortableHandler = new SortableFormArrayHandler();
+            }
+            else {
+                this.sortableHandler = new SortableArrayHandler();
+            }
+            //
+            this.dropEnabled = !!this._sortableData;
+            // console.log("collection is changed, drop enabled: " + this.dropEnabled);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SortableContainer.prototype, "dropzones", {
+        set: function (value) {
+            this.dropZones = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    SortableContainer.prototype._onDragEnterCallback = function (event) {
         if (this._sortableDataService.isDragged) {
-            let item = this._sortableDataService.sortableContainer.getItemAt(this._sortableDataService.index);
+            var item = this._sortableDataService.sortableContainer.getItemAt(this._sortableDataService.index);
             // Check does element exist in sortableData of this Container
             if (this.indexOf(item) === -1) {
                 // Let's add it
@@ -52,22 +67,24 @@ export class SortableContainer extends AbstractComponent {
             // Refresh changes in properties of container component
             this.detectChanges();
         }
-    }
-    getItemAt(index) {
+    };
+    SortableContainer.prototype.getItemAt = function (index) {
         return this.sortableHandler.getItemAt(this._sortableData, index);
-    }
-    indexOf(item) {
+    };
+    SortableContainer.prototype.indexOf = function (item) {
         return this.sortableHandler.indexOf(this._sortableData, item);
-    }
-    removeItemAt(index) {
+    };
+    SortableContainer.prototype.removeItemAt = function (index) {
         this.sortableHandler.removeItemAt(this._sortableData, index);
-    }
-    insertItemAt(item, index) {
+    };
+    SortableContainer.prototype.insertItemAt = function (item, index) {
         this.sortableHandler.insertItemAt(this._sortableData, item, index);
-    }
-}
-SortableContainer.ɵfac = function SortableContainer_Factory(t) { return new (t || SortableContainer)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef), i0.ɵɵdirectiveInject(i1.DragDropSortableService)); };
-SortableContainer.ɵdir = i0.ɵɵdefineDirective({ type: SortableContainer, selectors: [["", "dnd-sortable-container", ""]], inputs: { draggable: ["dragEnabled", "draggable"], sortableData: "sortableData", dropzones: ["dropZones", "dropzones"] }, features: [i0.ɵɵInheritDefinitionFeature] });
+    };
+    SortableContainer.ɵfac = function SortableContainer_Factory(t) { return new (t || SortableContainer)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef), i0.ɵɵdirectiveInject(i1.DragDropSortableService)); };
+    SortableContainer.ɵdir = i0.ɵɵdefineDirective({ type: SortableContainer, selectors: [["", "dnd-sortable-container", ""]], inputs: { draggable: ["dragEnabled", "draggable"], sortableData: "sortableData", dropzones: ["dropZones", "dropzones"] }, features: [i0.ɵɵInheritDefinitionFeature] });
+    return SortableContainer;
+}(AbstractComponent));
+export { SortableContainer };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(SortableContainer, [{
         type: Directive,
         args: [{ selector: '[dnd-sortable-container]' }]
@@ -80,71 +97,95 @@ SortableContainer.ɵdir = i0.ɵɵdefineDirective({ type: SortableContainer, sele
             type: Input,
             args: ["dropZones"]
         }] }); })();
-class SortableArrayHandler {
-    getItemAt(sortableData, index) {
+var SortableArrayHandler = /** @class */ (function () {
+    function SortableArrayHandler() {
+    }
+    SortableArrayHandler.prototype.getItemAt = function (sortableData, index) {
         return sortableData[index];
-    }
-    indexOf(sortableData, item) {
+    };
+    SortableArrayHandler.prototype.indexOf = function (sortableData, item) {
         return sortableData.indexOf(item);
-    }
-    removeItemAt(sortableData, index) {
+    };
+    SortableArrayHandler.prototype.removeItemAt = function (sortableData, index) {
         sortableData.splice(index, 1);
-    }
-    insertItemAt(sortableData, item, index) {
+    };
+    SortableArrayHandler.prototype.insertItemAt = function (sortableData, item, index) {
         sortableData.splice(index, 0, item);
+    };
+    return SortableArrayHandler;
+}());
+var SortableFormArrayHandler = /** @class */ (function () {
+    function SortableFormArrayHandler() {
     }
-}
-class SortableFormArrayHandler {
-    getItemAt(sortableData, index) {
+    SortableFormArrayHandler.prototype.getItemAt = function (sortableData, index) {
         return sortableData.at(index);
-    }
-    indexOf(sortableData, item) {
+    };
+    SortableFormArrayHandler.prototype.indexOf = function (sortableData, item) {
         return sortableData.controls.indexOf(item);
-    }
-    removeItemAt(sortableData, index) {
+    };
+    SortableFormArrayHandler.prototype.removeItemAt = function (sortableData, index) {
         sortableData.removeAt(index);
-    }
-    insertItemAt(sortableData, item, index) {
+    };
+    SortableFormArrayHandler.prototype.insertItemAt = function (sortableData, item, index) {
         sortableData.insert(index, item);
-    }
-}
-export class SortableComponent extends AbstractComponent {
-    constructor(elemRef, dragDropService, config, _sortableContainer, _sortableDataService, cdr) {
-        super(elemRef, dragDropService, config, cdr);
-        this._sortableContainer = _sortableContainer;
-        this._sortableDataService = _sortableDataService;
+    };
+    return SortableFormArrayHandler;
+}());
+var SortableComponent = /** @class */ (function (_super) {
+    __extends(SortableComponent, _super);
+    function SortableComponent(elemRef, dragDropService, config, _sortableContainer, _sortableDataService, cdr) {
+        var _this = _super.call(this, elemRef, dragDropService, config, cdr) || this;
+        _this._sortableContainer = _sortableContainer;
+        _this._sortableDataService = _sortableDataService;
         /**
          * Callback function called when the drag action ends with a valid drop action.
          * It is activated after the on-drop-success callback
          */
-        this.onDragSuccessCallback = new EventEmitter();
-        this.onDragStartCallback = new EventEmitter();
-        this.onDragOverCallback = new EventEmitter();
-        this.onDragEndCallback = new EventEmitter();
-        this.onDropSuccessCallback = new EventEmitter();
-        this.dropZones = this._sortableContainer.dropZones;
-        this.dragEnabled = true;
-        this.dropEnabled = true;
+        _this.onDragSuccessCallback = new EventEmitter();
+        _this.onDragStartCallback = new EventEmitter();
+        _this.onDragOverCallback = new EventEmitter();
+        _this.onDragEndCallback = new EventEmitter();
+        _this.onDropSuccessCallback = new EventEmitter();
+        _this.dropZones = _this._sortableContainer.dropZones;
+        _this.dragEnabled = true;
+        _this.dropEnabled = true;
+        return _this;
     }
-    set draggable(value) {
-        this.dragEnabled = !!value;
-    }
-    set droppable(value) {
-        this.dropEnabled = !!value;
-    }
-    /**
-     * Drag allowed effect
-     */
-    set effectallowed(value) {
-        this.effectAllowed = value;
-    }
-    /**
-     * Drag effect cursor
-     */
-    set effectcursor(value) {
-        this.effectCursor = value;
-    }
-    _onDragStartCallback(event) {
+    Object.defineProperty(SortableComponent.prototype, "draggable", {
+        set: function (value) {
+            this.dragEnabled = !!value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SortableComponent.prototype, "droppable", {
+        set: function (value) {
+            this.dropEnabled = !!value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SortableComponent.prototype, "effectallowed", {
+        /**
+         * Drag allowed effect
+         */
+        set: function (value) {
+            this.effectAllowed = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SortableComponent.prototype, "effectcursor", {
+        /**
+         * Drag effect cursor
+         */
+        set: function (value) {
+            this.effectCursor = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    SortableComponent.prototype._onDragStartCallback = function (event) {
         // console.log('_onDragStartCallback. dragging elem with index ' + this.index);
         this._sortableDataService.isDragged = true;
         this._sortableDataService.sortableContainer = this._sortableContainer;
@@ -156,8 +197,8 @@ export class SortableComponent extends AbstractComponent {
         this._dragDropService.onDragSuccessCallback = this.onDragSuccessCallback;
         //
         this.onDragStartCallback.emit(this._dragDropService.dragData);
-    }
-    _onDragOverCallback(event) {
+    };
+    SortableComponent.prototype._onDragOverCallback = function (event) {
         if (this._sortableDataService.isDragged && this._elem !== this._sortableDataService.elem) {
             // console.log('_onDragOverCallback. dragging elem with index ' + this.index);
             this._sortableDataService.sortableContainer = this._sortableContainer;
@@ -165,8 +206,8 @@ export class SortableComponent extends AbstractComponent {
             this._sortableDataService.markSortable(this._elem);
             this.onDragOverCallback.emit(this._dragDropService.dragData);
         }
-    }
-    _onDragEndCallback(event) {
+    };
+    SortableComponent.prototype._onDragEndCallback = function (event) {
         // console.log('_onDragEndCallback. end dragging elem with index ' + this.index);
         this._sortableDataService.isDragged = false;
         this._sortableDataService.sortableContainer = null;
@@ -178,15 +219,15 @@ export class SortableComponent extends AbstractComponent {
         this._dragDropService.onDragSuccessCallback = null;
         //
         this.onDragEndCallback.emit(this._dragDropService.dragData);
-    }
-    _onDragEnterCallback(event) {
+    };
+    SortableComponent.prototype._onDragEnterCallback = function (event) {
         if (this._sortableDataService.isDragged) {
             this._sortableDataService.markSortable(this._elem);
             if ((this.index !== this._sortableDataService.index) ||
                 (this._sortableDataService.sortableContainer.sortableData !== this._sortableContainer.sortableData)) {
                 // console.log('Component._onDragEnterCallback. drag node [' + this.index + '] over node [' + this._sortableDataService.index + ']');
                 // Get item
-                let item = this._sortableDataService.sortableContainer.getItemAt(this._sortableDataService.index);
+                var item = this._sortableDataService.sortableContainer.getItemAt(this._sortableDataService.index);
                 // Remove item from previouse list
                 this._sortableDataService.sortableContainer.removeItemAt(this._sortableDataService.index);
                 if (this._sortableDataService.sortableContainer.sortableData.length === 0) {
@@ -202,8 +243,8 @@ export class SortableComponent extends AbstractComponent {
                 this.detectChanges();
             }
         }
-    }
-    _onDropCallback(event) {
+    };
+    SortableComponent.prototype._onDropCallback = function (event) {
         if (this._sortableDataService.isDragged) {
             // console.log('onDropCallback.onDropSuccessCallback.dragData', this._dragDropService.dragData);
             this.onDropSuccessCallback.emit(this._dragDropService.dragData);
@@ -214,10 +255,12 @@ export class SortableComponent extends AbstractComponent {
             // Refresh changes in properties of container component
             this._sortableContainer.detectChanges();
         }
-    }
-}
-SortableComponent.ɵfac = function SortableComponent_Factory(t) { return new (t || SortableComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(SortableContainer), i0.ɵɵdirectiveInject(i1.DragDropSortableService), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
-SortableComponent.ɵdir = i0.ɵɵdefineDirective({ type: SortableComponent, selectors: [["", "dnd-sortable", ""]], inputs: { index: ["sortableIndex", "index"], draggable: ["dragEnabled", "draggable"], droppable: ["dropEnabled", "droppable"], dragData: "dragData", effectallowed: ["effectAllowed", "effectallowed"], effectcursor: ["effectCursor", "effectcursor"] }, outputs: { onDragSuccessCallback: "onDragSuccess", onDragStartCallback: "onDragStart", onDragOverCallback: "onDragOver", onDragEndCallback: "onDragEnd", onDropSuccessCallback: "onDropSuccess" }, features: [i0.ɵɵInheritDefinitionFeature] });
+    };
+    SortableComponent.ɵfac = function SortableComponent_Factory(t) { return new (t || SortableComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(SortableContainer), i0.ɵɵdirectiveInject(i1.DragDropSortableService), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
+    SortableComponent.ɵdir = i0.ɵɵdefineDirective({ type: SortableComponent, selectors: [["", "dnd-sortable", ""]], inputs: { index: ["sortableIndex", "index"], draggable: ["dragEnabled", "draggable"], droppable: ["dropEnabled", "droppable"], dragData: "dragData", effectallowed: ["effectAllowed", "effectallowed"], effectcursor: ["effectCursor", "effectcursor"] }, outputs: { onDragSuccessCallback: "onDragSuccess", onDragStartCallback: "onDragStart", onDragOverCallback: "onDragOver", onDragEndCallback: "onDragEnd", onDropSuccessCallback: "onDropSuccess" }, features: [i0.ɵɵInheritDefinitionFeature] });
+    return SortableComponent;
+}(AbstractComponent));
+export { SortableComponent };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(SortableComponent, [{
         type: Directive,
         args: [{ selector: '[dnd-sortable]' }]
@@ -254,13 +297,16 @@ SortableComponent.ɵdir = i0.ɵɵdefineDirective({ type: SortableComponent, sele
             type: Output,
             args: ["onDropSuccess"]
         }] }); })();
-export class SortableHandleComponent extends AbstractHandleComponent {
-    constructor(elemRef, dragDropService, config, _Component, cdr) {
-        super(elemRef, dragDropService, config, _Component, cdr);
+var SortableHandleComponent = /** @class */ (function (_super) {
+    __extends(SortableHandleComponent, _super);
+    function SortableHandleComponent(elemRef, dragDropService, config, _Component, cdr) {
+        return _super.call(this, elemRef, dragDropService, config, _Component, cdr) || this;
     }
-}
-SortableHandleComponent.ɵfac = function SortableHandleComponent_Factory(t) { return new (t || SortableHandleComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(SortableComponent), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
-SortableHandleComponent.ɵdir = i0.ɵɵdefineDirective({ type: SortableHandleComponent, selectors: [["", "dnd-sortable-handle", ""]], features: [i0.ɵɵInheritDefinitionFeature] });
+    SortableHandleComponent.ɵfac = function SortableHandleComponent_Factory(t) { return new (t || SortableHandleComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(SortableComponent), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
+    SortableHandleComponent.ɵdir = i0.ɵɵdefineDirective({ type: SortableHandleComponent, selectors: [["", "dnd-sortable-handle", ""]], features: [i0.ɵɵInheritDefinitionFeature] });
+    return SortableHandleComponent;
+}(AbstractHandleComponent));
+export { SortableHandleComponent };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(SortableHandleComponent, [{
         type: Directive,
         args: [{ selector: '[dnd-sortable-handle]' }]

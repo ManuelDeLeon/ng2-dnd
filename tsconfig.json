@@ -1,34 +1,23 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "declaration": true,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "types": [
-      "hammerjs",
-      "jasmine",
-      "node"
-    ],
-  },
-  "angularCompilerOptions": {
-    "strictMetadataEmit": true,
-    "strictInjectionParameters": true,
-    "skipTemplateCodegen": true
-  },
-  "files": [
-    "public_api.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+	"compileOnSave": false,
+	"compilerOptions": {
+		"baseUrl": "./",
+		"declaration": true,
+		"downlevelIteration": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": false,
+		"moduleResolution": "node",
+		"importHelpers": true,
+		"target": "es5",
+		"module": "es6",
+		"lib": ["es2018", "dom"],
+		"types": ["hammerjs", "jasmine", "node"]
+	},
+	"angularCompilerOptions": {
+		"strictMetadataEmit": true,
+		"strictInjectionParameters": true,
+		"skipTemplateCodegen": true
+	},
+	"files": ["public_api.ts"],
+	"exclude": ["node_modules"]
 }

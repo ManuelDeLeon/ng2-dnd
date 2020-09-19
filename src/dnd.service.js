@@ -5,32 +5,42 @@ import { Injectable } from '@angular/core';
 import { isPresent } from './dnd.utils';
 import * as i0 from "@angular/core";
 import * as i1 from "./dnd.config";
-export class DragDropData {
-}
+var DragDropData = /** @class */ (function () {
+    function DragDropData() {
+    }
+    return DragDropData;
+}());
+export { DragDropData };
 export function dragDropServiceFactory() {
     return new DragDropService();
 }
-export class DragDropService {
-    constructor() {
+var DragDropService = /** @class */ (function () {
+    function DragDropService() {
         this.allowedDropZones = [];
     }
-}
-DragDropService.ɵfac = function DragDropService_Factory(t) { return new (t || DragDropService)(); };
-DragDropService.ɵprov = i0.ɵɵdefineInjectable({ token: DragDropService, factory: DragDropService.ɵfac });
+    DragDropService.ɵfac = function DragDropService_Factory(t) { return new (t || DragDropService)(); };
+    DragDropService.ɵprov = i0.ɵɵdefineInjectable({ token: DragDropService, factory: DragDropService.ɵfac });
+    return DragDropService;
+}());
+export { DragDropService };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(DragDropService, [{
         type: Injectable
     }], null, null); })();
 export function dragDropSortableServiceFactory(config) {
     return new DragDropSortableService(config);
 }
-export class DragDropSortableService {
-    constructor(_config) {
+var DragDropSortableService = /** @class */ (function () {
+    function DragDropSortableService(_config) {
         this._config = _config;
     }
-    get elem() {
-        return this._elem;
-    }
-    markSortable(elem) {
+    Object.defineProperty(DragDropSortableService.prototype, "elem", {
+        get: function () {
+            return this._elem;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    DragDropSortableService.prototype.markSortable = function (elem) {
         if (isPresent(this._elem)) {
             this._elem.classList.remove(this._config.onSortableDragClass);
         }
@@ -38,10 +48,12 @@ export class DragDropSortableService {
             this._elem = elem;
             this._elem.classList.add(this._config.onSortableDragClass);
         }
-    }
-}
-DragDropSortableService.ɵfac = function DragDropSortableService_Factory(t) { return new (t || DragDropSortableService)(i0.ɵɵinject(i1.DragDropConfig)); };
-DragDropSortableService.ɵprov = i0.ɵɵdefineInjectable({ token: DragDropSortableService, factory: DragDropSortableService.ɵfac });
+    };
+    DragDropSortableService.ɵfac = function DragDropSortableService_Factory(t) { return new (t || DragDropSortableService)(i0.ɵɵinject(i1.DragDropConfig)); };
+    DragDropSortableService.ɵprov = i0.ɵɵdefineInjectable({ token: DragDropSortableService, factory: DragDropSortableService.ɵfac });
+    return DragDropSortableService;
+}());
+export { DragDropSortableService };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(DragDropSortableService, [{
         type: Injectable
     }], function () { return [{ type: i1.DragDropConfig }]; }, null); })();

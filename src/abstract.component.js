@@ -6,8 +6,9 @@ import { isString, isFunction, isPresent, createImage, callFun } from './dnd.uti
 import * as i0 from "@angular/core";
 import * as i1 from "./dnd.service";
 import * as i2 from "./dnd.config";
-export class AbstractComponent {
-    constructor(elemRef, _dragDropService, _config, _cdr) {
+var AbstractComponent = /** @class */ (function () {
+    function AbstractComponent(elemRef, _dragDropService, _config, _cdr) {
+        var _this = this;
         this.elemRef = elemRef;
         this._dragDropService = _dragDropService;
         this._config = _config;
@@ -29,117 +30,122 @@ export class AbstractComponent {
         //
         // DROP events
         //
-        this._elem.ondragenter = (event) => {
-            this._onDragEnter(event);
+        this._elem.ondragenter = function (event) {
+            _this._onDragEnter(event);
         };
-        this._elem.ondragover = (event) => {
-            this._onDragOver(event);
+        this._elem.ondragover = function (event) {
+            _this._onDragOver(event);
             //
             if (event.dataTransfer != null) {
-                event.dataTransfer.dropEffect = this._config.dropEffect.name;
+                event.dataTransfer.dropEffect = _this._config.dropEffect.name;
             }
             return false;
         };
-        this._elem.ondragleave = (event) => {
-            this._onDragLeave(event);
+        this._elem.ondragleave = function (event) {
+            _this._onDragLeave(event);
         };
-        this._elem.ondrop = (event) => {
-            this._onDrop(event);
+        this._elem.ondrop = function (event) {
+            _this._onDrop(event);
         };
         //
         // Drag events
         //
-        this._elem.onmousedown = (event) => {
-            this._target = event.target;
+        this._elem.onmousedown = function (event) {
+            _this._target = event.target;
         };
-        this._elem.ondragstart = (event) => {
-            if (this._dragHandle) {
-                if (!this._dragHandle.contains(this._target)) {
+        this._elem.ondragstart = function (event) {
+            if (_this._dragHandle) {
+                if (!_this._dragHandle.contains(_this._target)) {
                     event.preventDefault();
                     return;
                 }
             }
-            this._onDragStart(event);
+            _this._onDragStart(event);
             //
             if (event.dataTransfer != null) {
                 event.dataTransfer.setData('text', '');
                 // Change drag effect
-                event.dataTransfer.effectAllowed = this.effectAllowed || this._config.dragEffect.name;
+                event.dataTransfer.effectAllowed = _this.effectAllowed || _this._config.dragEffect.name;
                 // Change drag image
-                if (isPresent(this.dragImage)) {
-                    if (isString(this.dragImage)) {
-                        event.dataTransfer.setDragImage(createImage(this.dragImage));
+                if (isPresent(_this.dragImage)) {
+                    if (isString(_this.dragImage)) {
+                        event.dataTransfer.setDragImage(createImage(_this.dragImage));
                     }
-                    else if (isFunction(this.dragImage)) {
-                        event.dataTransfer.setDragImage(callFun(this.dragImage));
+                    else if (isFunction(_this.dragImage)) {
+                        event.dataTransfer.setDragImage(callFun(_this.dragImage));
                     }
                     else {
-                        let img = this.dragImage;
+                        var img = _this.dragImage;
                         event.dataTransfer.setDragImage(img.imageElement, img.x_offset, img.y_offset);
                     }
                 }
-                else if (isPresent(this._config.dragImage)) {
-                    let dragImage = this._config.dragImage;
+                else if (isPresent(_this._config.dragImage)) {
+                    var dragImage = _this._config.dragImage;
                     event.dataTransfer.setDragImage(dragImage.imageElement, dragImage.x_offset, dragImage.y_offset);
                 }
-                else if (this.cloneItem) {
-                    this._dragHelper = this._elem.cloneNode(true);
-                    this._dragHelper.classList.add('dnd-drag-item');
-                    this._dragHelper.style.position = "absolute";
-                    this._dragHelper.style.top = "0px";
-                    this._dragHelper.style.left = "-1000px";
-                    this._elem.parentElement.appendChild(this._dragHelper);
-                    event.dataTransfer.setDragImage(this._dragHelper, event.offsetX, event.offsetY);
+                else if (_this.cloneItem) {
+                    _this._dragHelper = _this._elem.cloneNode(true);
+                    _this._dragHelper.classList.add('dnd-drag-item');
+                    _this._dragHelper.style.position = "absolute";
+                    _this._dragHelper.style.top = "0px";
+                    _this._dragHelper.style.left = "-1000px";
+                    _this._elem.parentElement.appendChild(_this._dragHelper);
+                    event.dataTransfer.setDragImage(_this._dragHelper, event.offsetX, event.offsetY);
                 }
                 // Change drag cursor
-                let cursorelem = (this._dragHandle) ? this._dragHandle : this._elem;
-                if (this._dragEnabled) {
-                    cursorelem.style.cursor = this.effectCursor ? this.effectCursor : this._config.dragCursor;
+                var cursorelem = (_this._dragHandle) ? _this._dragHandle : _this._elem;
+                if (_this._dragEnabled) {
+                    cursorelem.style.cursor = _this.effectCursor ? _this.effectCursor : _this._config.dragCursor;
                 }
                 else {
-                    cursorelem.style.cursor = this._defaultCursor;
+                    cursorelem.style.cursor = _this._defaultCursor;
                 }
             }
         };
-        this._elem.ondragend = (event) => {
-            if (this._elem.parentElement && this._dragHelper) {
-                this._elem.parentElement.removeChild(this._dragHelper);
+        this._elem.ondragend = function (event) {
+            if (_this._elem.parentElement && _this._dragHelper) {
+                _this._elem.parentElement.removeChild(_this._dragHelper);
             }
             // console.log('ondragend', event.target);
-            this._onDragEnd(event);
+            _this._onDragEnd(event);
             // Restore style of dragged element
-            let cursorelem = (this._dragHandle) ? this._dragHandle : this._elem;
-            cursorelem.style.cursor = this._defaultCursor;
+            var cursorelem = (_this._dragHandle) ? _this._dragHandle : _this._elem;
+            cursorelem.style.cursor = _this._defaultCursor;
         };
     }
-    set dragEnabled(enabled) {
-        this._dragEnabled = !!enabled;
-        this._elem.draggable = this._dragEnabled;
-    }
-    get dragEnabled() {
-        return this._dragEnabled;
-    }
-    setDragHandle(elem) {
+    Object.defineProperty(AbstractComponent.prototype, "dragEnabled", {
+        get: function () {
+            return this._dragEnabled;
+        },
+        set: function (enabled) {
+            this._dragEnabled = !!enabled;
+            this._elem.draggable = this._dragEnabled;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    AbstractComponent.prototype.setDragHandle = function (elem) {
         this._dragHandle = elem;
-    }
+    };
     /******* Change detection ******/
-    detectChanges() {
+    AbstractComponent.prototype.detectChanges = function () {
+        var _this = this;
         // Programmatically run change detection to fix issue in Safari
-        setTimeout(() => {
-            if (this._cdr && !this._cdr.destroyed) {
-                this._cdr.detectChanges();
+        setTimeout(function () {
+            if (_this._cdr && !_this._cdr.destroyed) {
+                _this._cdr.detectChanges();
             }
         }, 250);
-    }
+    };
     //****** Droppable *******//
-    _onDragEnter(event) {
+    AbstractComponent.prototype._onDragEnter = function (event) {
         // console.log('ondragenter._isDropAllowed', this._isDropAllowed);
         if (this._isDropAllowed(event)) {
             // event.preventDefault();
             this._onDragEnterCallback(event);
         }
-    }
-    _onDragOver(event) {
+    };
+    AbstractComponent.prototype._onDragOver = function (event) {
         // // console.log('ondragover._isDropAllowed', this._isDropAllowed);
         if (this._isDropAllowed(event)) {
             // The element is over the same source element - do nothing
@@ -149,15 +155,15 @@ export class AbstractComponent {
             }
             this._onDragOverCallback(event);
         }
-    }
-    _onDragLeave(event) {
+    };
+    AbstractComponent.prototype._onDragLeave = function (event) {
         // console.log('ondragleave._isDropAllowed', this._isDropAllowed);
         if (this._isDropAllowed(event)) {
             // event.preventDefault();
             this._onDragLeaveCallback(event);
         }
-    }
-    _onDrop(event) {
+    };
+    AbstractComponent.prototype._onDrop = function (event) {
         // console.log('ondrop._isDropAllowed', this._isDropAllowed);
         if (this._isDropAllowed(event)) {
             // Necessary. Allows us to drop.
@@ -165,8 +171,8 @@ export class AbstractComponent {
             this._onDropCallback(event);
             this.detectChanges();
         }
-    }
-    _isDropAllowed(event) {
+    };
+    AbstractComponent.prototype._isDropAllowed = function (event) {
         if ((this._dragDropService.isDragged || (event.dataTransfer && event.dataTransfer.files)) && this.dropEnabled) {
             // First, if `allowDrop` is set, call it to determine whether the
             // dragged element can be dropped here.
@@ -177,53 +183,55 @@ export class AbstractComponent {
             if (this.dropZones.length === 0 && this._dragDropService.allowedDropZones.length === 0) {
                 return true;
             }
-            for (let i = 0; i < this._dragDropService.allowedDropZones.length; i++) {
-                let dragZone = this._dragDropService.allowedDropZones[i];
+            for (var i = 0; i < this._dragDropService.allowedDropZones.length; i++) {
+                var dragZone = this._dragDropService.allowedDropZones[i];
                 if (this.dropZones.indexOf(dragZone) !== -1) {
                     return true;
                 }
             }
         }
         return false;
-    }
-    _preventAndStop(event) {
+    };
+    AbstractComponent.prototype._preventAndStop = function (event) {
         if (event.preventDefault) {
             event.preventDefault();
         }
         if (event.stopPropagation) {
             event.stopPropagation();
         }
-    }
+    };
     //*********** Draggable **********//
-    _onDragStart(event) {
+    AbstractComponent.prototype._onDragStart = function (event) {
         //console.log('ondragstart.dragEnabled', this._dragEnabled);
         if (this._dragEnabled) {
             this._dragDropService.allowedDropZones = this.dropZones;
             // console.log('ondragstart.allowedDropZones', this._dragDropService.allowedDropZones);
             this._onDragStartCallback(event);
         }
-    }
-    _onDragEnd(event) {
+    };
+    AbstractComponent.prototype._onDragEnd = function (event) {
         this._dragDropService.allowedDropZones = [];
         // console.log('ondragend.allowedDropZones', this._dragDropService.allowedDropZones);
         this._onDragEndCallback(event);
-    }
+    };
     //**** Drop Callbacks ****//
-    _onDragEnterCallback(event) { }
-    _onDragOverCallback(event) { }
-    _onDragLeaveCallback(event) { }
-    _onDropCallback(event) { }
+    AbstractComponent.prototype._onDragEnterCallback = function (event) { };
+    AbstractComponent.prototype._onDragOverCallback = function (event) { };
+    AbstractComponent.prototype._onDragLeaveCallback = function (event) { };
+    AbstractComponent.prototype._onDropCallback = function (event) { };
     //**** Drag Callbacks ****//
-    _onDragStartCallback(event) { }
-    _onDragEndCallback(event) { }
-}
-AbstractComponent.ɵfac = function AbstractComponent_Factory(t) { return new (t || AbstractComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
-AbstractComponent.ɵdir = i0.ɵɵdefineDirective({ type: AbstractComponent });
+    AbstractComponent.prototype._onDragStartCallback = function (event) { };
+    AbstractComponent.prototype._onDragEndCallback = function (event) { };
+    AbstractComponent.ɵfac = function AbstractComponent_Factory(t) { return new (t || AbstractComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
+    AbstractComponent.ɵdir = i0.ɵɵdefineDirective({ type: AbstractComponent });
+    return AbstractComponent;
+}());
+export { AbstractComponent };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(AbstractComponent, [{
         type: Directive
     }], function () { return [{ type: i0.ElementRef }, { type: i1.DragDropService }, { type: i2.DragDropConfig }, { type: i0.ChangeDetectorRef }]; }, null); })();
-export class AbstractHandleComponent {
-    constructor(elemRef, _dragDropService, _config, _Component, _cdr) {
+var AbstractHandleComponent = /** @class */ (function () {
+    function AbstractHandleComponent(elemRef, _dragDropService, _config, _Component, _cdr) {
         this.elemRef = elemRef;
         this._dragDropService = _dragDropService;
         this._config = _config;
@@ -231,9 +239,11 @@ export class AbstractHandleComponent {
         this._cdr = _cdr;
         this._Component.setDragHandle(this.elemRef.nativeElement);
     }
-}
-AbstractHandleComponent.ɵfac = function AbstractHandleComponent_Factory(t) { return new (t || AbstractHandleComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(AbstractComponent), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
-AbstractHandleComponent.ɵdir = i0.ɵɵdefineDirective({ type: AbstractHandleComponent });
+    AbstractHandleComponent.ɵfac = function AbstractHandleComponent_Factory(t) { return new (t || AbstractHandleComponent)(i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i1.DragDropService), i0.ɵɵdirectiveInject(i2.DragDropConfig), i0.ɵɵdirectiveInject(AbstractComponent), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
+    AbstractHandleComponent.ɵdir = i0.ɵɵdefineDirective({ type: AbstractHandleComponent });
+    return AbstractHandleComponent;
+}());
+export { AbstractHandleComponent };
 /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(AbstractHandleComponent, [{
         type: Directive
     }], function () { return [{ type: i0.ElementRef }, { type: i1.DragDropService }, { type: i2.DragDropConfig }, { type: AbstractComponent }, { type: i0.ChangeDetectorRef }]; }, null); })();
